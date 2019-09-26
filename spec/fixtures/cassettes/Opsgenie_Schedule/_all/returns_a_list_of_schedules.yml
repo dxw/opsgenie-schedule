@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.opsgenie.com/v2/schedules
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Authorization:
+      - GenieKey <OPSGENIE_API_KEY>
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=UTF-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 26 Sep 2019 13:04:18 GMT
+      X-Response-Time:
+      - '0.003'
+      X-Request-Id:
+      - '08ac8ce8-0131-4fb3-b511-298ec6df4bfa'
+      X-Ratelimit-State:
+      - OK
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 320b04684a5b16980772c5d36c63ecea.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LHR61-C2
+      X-Amz-Cf-Id:
+      - ZkZP6PZugo7cF9D6rpeV3z-5y-hTw0WglAhjDe2rdnskfLoXxaGIrA==
+    body:
+      encoding: UTF-8
+      string: '{"data":[{"id":"b8e97704-0e9d-41b5-b27c-9d9027c83943","name":"ooh_second_line","description":"","timezone":"Europe/London","enabled":true,"ownerTeam":{"id":"72c99d92-c7c8-4fd9-b8db-9cc293cd19e7","name":"support_team"},"rotations":[]},{"id":"e71d500f-896a-4b28-8b08-3bfe56e1ed76","name":"first_line","description":"","timezone":"Europe/London","enabled":true,"ownerTeam":{"id":"72c99d92-c7c8-4fd9-b8db-9cc293cd19e7","name":"support_team"},"rotations":[]}],"expandable":["rotation"],"took":0.003,"requestId":"08ac8ce8-0131-4fb3-b511-298ec6df4bfa"}'
+    http_version: 
+  recorded_at: Thu, 26 Sep 2019 13:04:18 GMT
+recorded_with: VCR 5.0.0

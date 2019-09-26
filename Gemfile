@@ -1,0 +1,10 @@
+source "https://rubygems.org"
+
+gem "httparty"
+gem "rspec"
+gem "dotenv"
+gem "pry"
+gem "standard"
+gem "rake"
+gem "vcr"
+gem "webmock"
