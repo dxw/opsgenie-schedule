@@ -21,6 +21,17 @@ RSpec.describe Opsgenie::Schedule, :vcr do
     end
   end
 
+  describe "#find_by_name" do
+    let(:name) { "first_line" }
+    let(:schedule) { described_class.find_by_name(name) }
+
+    it "returns a schedule" do
+      expect(schedule).to be_a(Opsgenie::Schedule)
+      expect(schedule.id).to eq("e71d500f-896a-4b28-8b08-3bfe56e1ed76")
+      expect(schedule.name).to eq(name)
+    end
+  end
+
   describe "on_calls" do
     let(:id) { "e71d500f-896a-4b28-8b08-3bfe56e1ed76" }
     let(:schedule) { described_class.find(id) }

@@ -10,8 +10,16 @@ module Opsgenie
         body["data"].map { |s| new(s) }
       end
 
-      def find(id)
-        body = Opsgenie::Client.get("schedules/#{id}")
+      def find_by_name(name)
+        find(name, "name")
+      end
+
+      def find_by_id(id)
+        find(id, "name")
+      end
+
+      def find(id_or_name, type = "id")
+        body = Opsgenie::Client.get("schedules/#{id_or_name}?identifierType=#{type}")
         new(body["data"])
       end
     end

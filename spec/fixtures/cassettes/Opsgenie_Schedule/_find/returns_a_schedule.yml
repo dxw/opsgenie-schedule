@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://api.opsgenie.com/v2/schedules/b8e97704-0e9d-41b5-b27c-9d9027c83943
+    uri: https://api.opsgenie.com/v2/schedules/b8e97704-0e9d-41b5-b27c-9d9027c83943?identifierType=id
     body:
       encoding: US-ASCII
       string: ''
@@ -21,24 +21,24 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 26 Sep 2019 13:25:20 GMT
+      - Fri, 27 Sep 2019 12:47:54 GMT
       X-Response-Time:
-      - '0.073'
+      - '0.006'
       X-Request-Id:
-      - 93883ce7-6741-41b4-8fbc-b83e3c3b30b0
+      - '08e96798-1840-455e-9c85-4a88edeb752d'
       X-Ratelimit-State:
       - OK
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 9dfe528172e388251f8e164c4585ba91.cloudfront.net (CloudFront)
+      - 1.1 8583d317c3b0492356857e1a1a67d192.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LHR61-C1
+      - LHR62-C3
       X-Amz-Cf-Id:
-      - aqWLtYOv2iyE2FDUbMCxsvpMXF_wwm73uokUID2_igcLdkBveTT4Bg==
+      - T29AlUh9E2PxbT-mo-_mP9I859u4_Bav-hbZOnScmBPf__M5bvie_w==
     body:
       encoding: UTF-8
-      string: '{"data":{"id":"b8e97704-0e9d-41b5-b27c-9d9027c83943","name":"ooh_second_line","description":"","timezone":"Europe/London","enabled":true,"ownerTeam":{"id":"72c99d92-c7c8-4fd9-b8db-9cc293cd19e7","name":"support_team"},"rotations":[{"id":"6fce1fd0-578a-431a-8c18-ae7db8b48bb5","name":"Rota","startDate":"2019-09-11T09:30:00Z","type":"weekly","length":1,"participants":[{"type":"user","id":"acd9af98-e3c0-4588-8276-1c545911e44f","username":"chris@dxw.com"},{"type":"user","id":"45e0e1a5-72f0-4df9-a449-13a4c35c486f","username":"dom@dxw.com"},{"type":"user","id":"055dad59-af7f-42a3-8591-9ac04863e546","username":"lee@dxw.com"}],"timeRestriction":{"type":"weekday-and-time-of-day","restrictions":[{"startDay":"friday","endDay":"monday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"thursday","endDay":"friday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"wednesday","endDay":"thursday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"monday","endDay":"tuesday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"tuesday","endDay":"wednesday","startHour":18,"endHour":10,"startMin":0,"endMin":0}]}}]},"took":0.073,"requestId":"93883ce7-6741-41b4-8fbc-b83e3c3b30b0"}'
+      string: '{"data":{"id":"b8e97704-0e9d-41b5-b27c-9d9027c83943","name":"ooh_second_line","description":"","timezone":"Europe/London","enabled":true,"ownerTeam":{"id":"72c99d92-c7c8-4fd9-b8db-9cc293cd19e7","name":"support_team"},"rotations":[{"id":"6fce1fd0-578a-431a-8c18-ae7db8b48bb5","name":"Rota","startDate":"2019-09-11T09:30:00Z","type":"weekly","length":1,"participants":[{"type":"user","id":"acd9af98-e3c0-4588-8276-1c545911e44f","username":"chris@dxw.com"},{"type":"user","id":"45e0e1a5-72f0-4df9-a449-13a4c35c486f","username":"dom@dxw.com"},{"type":"user","id":"055dad59-af7f-42a3-8591-9ac04863e546","username":"lee@dxw.com"}],"timeRestriction":{"type":"weekday-and-time-of-day","restrictions":[{"startDay":"monday","endDay":"tuesday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"friday","endDay":"monday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"wednesday","endDay":"thursday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"thursday","endDay":"friday","startHour":18,"endHour":10,"startMin":0,"endMin":0},{"startDay":"tuesday","endDay":"wednesday","startHour":18,"endHour":10,"startMin":0,"endMin":0}]}}]},"took":0.006,"requestId":"08e96798-1840-455e-9c85-4a88edeb752d"}'
     http_version: 
-  recorded_at: Thu, 26 Sep 2019 13:25:20 GMT
+  recorded_at: Fri, 27 Sep 2019 12:47:54 GMT
 recorded_with: VCR 5.0.0
