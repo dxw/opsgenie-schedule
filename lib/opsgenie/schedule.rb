@@ -1,3 +1,5 @@
+require "date"
+
 module Opsgenie
   class Schedule
     attr_reader :id, :name
@@ -17,6 +19,21 @@ module Opsgenie
     def initialize(attrs)
       @id = attrs["id"]
       @name = attrs["name"]
+    end
+
+    def on_calls(date = Date.today)
+      datetime = "#{date}T10:00:00%2B00:00"
+      endpoint = "schedules/#{id}/on-calls?date=#{datetime}"
+      body = Opsgenie::Client.get(endpoint)
+      get_participants(body).map { |u| u["name"] }
+    end
+
+    private
+
+    def get_participants(body)
+      body["data"]["onCallParticipants"].select do |p|
+        p["type"] == "user"
+      end
     end
   end
 end
