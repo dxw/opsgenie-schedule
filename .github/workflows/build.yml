@@ -18,3 +18,5 @@ jobs:
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rake
+      env:
+        OPSGENIE_API_KEY: "some-api-key"
