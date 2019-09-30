@@ -1,7 +1,6 @@
 module Opsgenie
   class Client
     ROOT_PATH = "https://api.opsgenie.com".freeze
-    API_KEY = ENV["OPSGENIE_API_KEY"]
 
     class << self
       def get(path)
@@ -20,11 +19,17 @@ module Opsgenie
       end
 
       def auth_header
-        {"Authorization" => "GenieKey #{API_KEY}"}
+        {"Authorization" => "GenieKey #{api_key}"}
       end
 
       def version
         "v2"
+      end
+
+      def api_key
+        raise ConfigurationError.new("Missing API key. Use `Opsgenie.configure(api_key: YOUR_API_KEY)` to set the API key") if Config.opsgenie_api_key.nil?
+
+        Config.opsgenie_api_key
       end
     end
   end

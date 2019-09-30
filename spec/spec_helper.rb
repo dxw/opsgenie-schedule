@@ -4,10 +4,15 @@ require "opsgenie"
 require "pry"
 require "vcr"
 require "timecop"
+require "dotenv"
+
+Dotenv.load
 
 require "support/vcr"
 
 RSpec.configure do |config|
+  config.order = :random
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -17,4 +22,8 @@ RSpec.configure do |config|
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups
+
+  config.before(:all) do
+    Opsgenie.configure(api_key: ENV["OPSGENIE_API_KEY"])
+  end
 end
