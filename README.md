@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/dxw/opsgenie-schedule/workflows/Build/badge.svg)](https://github.com/dxw/opsgenie-schedule/actions)
+
 # Opsgenie Schedule
 
 A simple gem that fetches the scheduled people working on a given date for any Opsgenie schedule.
