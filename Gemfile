@@ -1,11 +1,3 @@
 source "https://rubygems.org"
 
-gem "httparty"
-gem "rspec"
-gem "dotenv"
-gem "pry"
-gem "standard"
-gem "rake"
-gem "timecop"
-gem "vcr"
-gem "webmock"
+gemspec
