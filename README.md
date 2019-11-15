@@ -29,9 +29,9 @@ $ gem install opsgenie-schedule
 Require and initialize the gem like so:
 
 ```ruby
-require 'opsgenie-schedule'
+require 'opsgenie'
 
-Opsgenie::Configure(api_key: "YOUR_OPSGENIE_API_KEY")
+Opsgenie.configure(api_key: "YOUR_OPSGENIE_API_KEY")
 ```
 
 And fetch a schedule by its name:
