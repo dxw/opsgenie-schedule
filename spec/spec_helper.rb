@@ -2,13 +2,11 @@ $LOAD_PATH.unshift File.join(File.dirname(__FILE__), "..", "lib")
 
 require "opsgenie"
 require "pry"
-require "vcr"
-require "timecop"
 require "dotenv"
 
 Dotenv.load
 
-require "support/vcr"
+require "webmock/rspec"
 
 RSpec.configure do |config|
   config.order = :random
