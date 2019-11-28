@@ -20,7 +20,7 @@ module Opsgenie
 
       def find(id_or_name, type = "id")
         body = Opsgenie::Client.get("schedules/#{id_or_name}?identifierType=#{type}")
-        new(body["data"])
+        new(body["data"]) unless body["data"].nil?
       end
     end
 

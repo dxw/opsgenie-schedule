@@ -19,6 +19,14 @@ RSpec.describe Opsgenie::Schedule, :vcr do
       expect(schedule.id).to eq(id)
       expect(schedule.name).to eq("ooh_second_line")
     end
+
+    context "when schedule does not exist" do
+      let(:id) { "b1d1b076-70b3-43a6-ac3b-ac386fdca79c" }
+
+      it "returns nil" do
+        expect(schedule).to eq(nil)
+      end
+    end
   end
 
   describe "#find_by_name" do
@@ -29,6 +37,14 @@ RSpec.describe Opsgenie::Schedule, :vcr do
       expect(schedule).to be_a(Opsgenie::Schedule)
       expect(schedule.id).to eq("e71d500f-896a-4b28-8b08-3bfe56e1ed76")
       expect(schedule.name).to eq(name)
+    end
+
+    context "when schedule does not exist" do
+      let(:name) { "some_schedule" }
+
+      it "returns nil" do
+        expect(schedule).to eq(nil)
+      end
     end
   end
 
