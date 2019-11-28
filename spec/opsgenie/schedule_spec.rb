@@ -9,15 +9,35 @@ RSpec.describe Opsgenie::Schedule do
       )
   end
 
+  let(:rotations) do
+    [
+      {
+        id: "6fce1fd0-578a-431a-8c18-ae7db8b48bb5",
+        name: "Rota",
+        startDate: "2019-11-27T10:30:00Z",
+        type: "weekly",
+        length: 1,
+        participants: [
+          {
+            type: "user",
+            id: "055dad59-af7f-42a3-8591-9ac04863e546",
+            username: "foo@example.com",
+          },
+        ],
+      },
+    ]
+  end
+
   describe "#all" do
     let(:all) { described_class.all }
-    let(:url) { "https://api.opsgenie.com/v2/schedules" }
+    let(:url) { "https://api.opsgenie.com/v2/schedules?expand=rotation" }
     let(:body) do
       {
         data: [
           {
             id: "b8e97704-0e9d-41b5-b27c-9d9027c83943",
             name: "ooh_second_line",
+            rotations: rotations,
           },
         ],
       }
@@ -26,6 +46,8 @@ RSpec.describe Opsgenie::Schedule do
     it "returns a list of schedules" do
       expect(all.count).to eq(1)
       expect(all.first).to be_a(Opsgenie::Schedule)
+      expect(all.first.rotations.count).to eq(1)
+      expect(all.first.rotations.first).to be_a(Opsgenie::Rotation)
       expect(stub).to have_been_requested
     end
   end
@@ -41,6 +63,7 @@ RSpec.describe Opsgenie::Schedule do
           description: "",
           timezone: "Europe/London",
           enabled: true,
+          rotations: rotations,
         },
       }
     end
@@ -82,6 +105,7 @@ RSpec.describe Opsgenie::Schedule do
           description: "",
           timezone: "Europe/London",
           enabled: true,
+          rotations: rotations,
         },
       }
     end
@@ -114,7 +138,7 @@ RSpec.describe Opsgenie::Schedule do
 
   describe "on_calls" do
     let(:id) { "e71d500f-896a-4b28-8b08-3bfe56e1ed76" }
-    let(:schedule) { described_class.new("id" => id, "name" => "first_line") }
+    let(:schedule) { described_class.new("id" => id, "name" => "first_line", "rotations" => []) }
     let(:body) do
       {
         data: {
