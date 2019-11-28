@@ -29,9 +29,9 @@ module Opsgenie
       @name = attrs["name"]
     end
 
-    def on_calls(date = Date.today)
-      datetime = "#{date}T10:00:00%2B00:00"
-      endpoint = "schedules/#{id}/on-calls?date=#{datetime}"
+    def on_calls(datetime = nil)
+      endpoint = "schedules/#{id}/on-calls"
+      endpoint += "?date=#{CGI.escape datetime.to_s}" unless datetime.nil?
       body = Opsgenie::Client.get(endpoint)
       get_participants(body).map { |u| u["name"] }
     end

@@ -53,10 +53,10 @@ schedule.on_calls
 #=> ["someone@example.com", "someone-else@example.com"]
 ```
 
-Or a given date like so:
+Or a given date time like so:
 
 ```ruby
-date = Date.parse("2019-01-01")
+date = DateTime.parse("2019-01-01T10:00:00")
 schedule.on_calls(date)
 #=> ["someone@example.com", "someone-else@example.com"]
 ```
