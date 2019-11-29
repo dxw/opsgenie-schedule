@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    opsgenie-schedule (0.0.1)
+    opsgenie-schedule (0.1.0)
       httparty (~> 0.17)
 
 GEM
@@ -23,7 +23,7 @@ GEM
     method_source (0.9.2)
     mime-types (3.3)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2019.0904)
+    mime-types-data (3.2019.1009)
     multi_xml (0.6.0)
     parallel (1.17.0)
     parser (2.6.4.1)
