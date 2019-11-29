@@ -27,7 +27,7 @@ module Opsgenie
     def initialize(attrs)
       @id = attrs["id"]
       @name = attrs["name"]
-      @rotations = attrs["rotations"].map { |r| Rotation.new(r) }
+      @rotations = attrs["rotations"].map { |r| Rotation.new(self, r) }
     end
 
     def on_calls(datetime = nil)
