@@ -8,7 +8,18 @@ RSpec.describe Opsgenie::Rotation do
       "startDate" => "2019-10-23T09:00:00Z",
       "type" => "weekly",
       "length" => 1,
-      "participants" => [],
+      "participants" => [
+        {
+          "id" => "19e39115-07d5-4924-8295-332a66dd1569",
+          "username" => "foo@example.com",
+          "type" => "user",
+        },
+        {
+          "id" => "acd9af98-e3c0-4588-8276-1c545911e44f",
+          "username" => "bar@example.com",
+          "type" => "user",
+        },
+      ],
       "timeRestriction" => {
         "type" => "weekday-and-time-of-day",
         "restrictions" => [
@@ -109,7 +120,7 @@ RSpec.describe Opsgenie::Rotation do
                      body: body.to_json,
                      headers: {"Content-Type" => "application/json"})
 
-        expect(on_calls).to eq(["foo@example.com", "bar@example.com", "baz@example.com"])
+        expect(on_calls).to eq(["foo@example.com", "bar@example.com"])
         expect(stub).to have_been_requested
       end
     end

@@ -34,7 +34,14 @@ module Opsgenie
         restriction["startMin"]
       )
 
-      schedule.on_calls((time + 60).to_datetime)
+      on_calls = schedule.on_calls((time + 60).to_datetime)
+      on_calls.select { |name| participant_usernames.include?(name) }
+    end
+
+    private
+
+    def participant_usernames
+      participants.map { |p| p["username"] }
     end
   end
 end
