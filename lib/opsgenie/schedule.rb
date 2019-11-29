@@ -32,9 +32,18 @@ module Opsgenie
 
     def on_calls(datetime = nil)
       endpoint = "schedules/#{id}/on-calls"
-      endpoint += "?date=#{CGI.escape datetime.to_s}" unless datetime.nil?
+      endpoint += "?date=#{escape_datetime(datetime)}" unless datetime.nil?
       body = Opsgenie::Client.get(endpoint)
       get_participants(body).map { |u| u["name"] }
+    end
+
+    def timeline(date: Date.today, interval: nil, interval_unit: nil)
+      datetime = date.to_datetime
+      endpoint = "schedules/#{id}/timeline?date=#{escape_datetime(datetime)}"
+      endpoint += "&interval=#{interval}" if interval
+      endpoint += "&intervalUnit=#{interval_unit}" if interval_unit
+      body = Opsgenie::Client.get(endpoint)
+      body.dig("data", "finalTimeline", "rotations")
     end
 
     private
@@ -43,6 +52,10 @@ module Opsgenie
       body["data"]["onCallParticipants"].select do |p|
         p["type"] == "user"
       end
+    end
+
+    def escape_datetime(datetime)
+      CGI.escape(datetime.to_s)
     end
   end
 end
