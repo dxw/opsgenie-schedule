@@ -2,6 +2,7 @@ require "httparty"
 
 require "opsgenie/client"
 require "opsgenie/schedule"
+require "opsgenie/rotation"
 require "opsgenie/config"
 
 module Opsgenie
