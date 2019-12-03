@@ -38,6 +38,8 @@ module Opsgenie
     end
 
     def timeline(date: Date.today, interval: nil, interval_unit: nil)
+      check_interval_unit(interval_unit) if interval_unit
+
       datetime = date.to_datetime
       endpoint = "schedules/#{id}/timeline?date=#{escape_datetime(datetime)}"
       endpoint += "&interval=#{interval}" if interval
@@ -56,6 +58,16 @@ module Opsgenie
 
     def escape_datetime(datetime)
       CGI.escape(datetime.to_s)
+    end
+
+    def check_interval_unit(value)
+      return if valid_intervals.include?(value)
+
+      raise ArgumentError, "`interval_unit` must be one of `#{valid_intervals}``"
+    end
+
+    def valid_intervals
+      %i[days weeks months]
     end
   end
 end

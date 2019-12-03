@@ -269,5 +269,14 @@ RSpec.describe Opsgenie::Schedule do
         expect(stub).to have_been_requested
       end
     end
+
+    context "when interval unit is invalid" do
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}&interval=1&intervalUnit=months" }
+      let(:timeline) { schedule.timeline(interval_unit: :eons, interval: 1) }
+
+      it "raises an error" do
+        expect { timeline }.to raise_error(ArgumentError)
+      end
+    end
   end
 end
