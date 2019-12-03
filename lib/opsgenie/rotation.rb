@@ -38,6 +38,16 @@ module Opsgenie
       on_calls.select { |name| participant_usernames.include?(name) }
     end
 
+    def timeline(date: Date.today, interval: nil, interval_unit: nil)
+      rotations = schedule.timeline(
+        date: date,
+        interval: interval,
+        interval_unit: interval_unit
+      )
+
+      rotations.find { |r| r["name"] == name }
+    end
+
     private
 
     def participant_usernames

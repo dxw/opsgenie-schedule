@@ -32,9 +32,20 @@ module Opsgenie
 
     def on_calls(datetime = nil)
       endpoint = "schedules/#{id}/on-calls"
-      endpoint += "?date=#{CGI.escape datetime.to_s}" unless datetime.nil?
+      endpoint += "?date=#{escape_datetime(datetime)}" unless datetime.nil?
       body = Opsgenie::Client.get(endpoint)
       get_participants(body).map { |u| u["name"] }
+    end
+
+    def timeline(date: Date.today, interval: nil, interval_unit: nil)
+      check_interval_unit(interval_unit) if interval_unit
+
+      datetime = date.to_datetime
+      endpoint = "schedules/#{id}/timeline?date=#{escape_datetime(datetime)}"
+      endpoint += "&interval=#{interval}" if interval
+      endpoint += "&intervalUnit=#{interval_unit}" if interval_unit
+      body = Opsgenie::Client.get(endpoint)
+      body.dig("data", "finalTimeline", "rotations")
     end
 
     private
@@ -43,6 +54,20 @@ module Opsgenie
       body["data"]["onCallParticipants"].select do |p|
         p["type"] == "user"
       end
+    end
+
+    def escape_datetime(datetime)
+      CGI.escape(datetime.to_s)
+    end
+
+    def check_interval_unit(value)
+      return if valid_intervals.include?(value)
+
+      raise ArgumentError, "`interval_unit` must be one of `#{valid_intervals}``"
+    end
+
+    def valid_intervals
+      %i[days weeks months]
     end
   end
 end

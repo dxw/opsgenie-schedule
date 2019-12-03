@@ -133,4 +133,79 @@ RSpec.describe Opsgenie::Rotation do
       end
     end
   end
+
+  describe "timeline" do
+    let(:body) do
+      {
+        data: {
+          finalTimeline: {
+            rotations: [
+              {
+                id: "538465d7-67d0-4d3d-80e0-e2a07a2b5649",
+                name: "OOH",
+                order: 5.0,
+                periods: [
+                  {
+                    startDate: "2019-11-06T18:00:00Z",
+                    endDate: "2019-11-07T10:00:00Z",
+                    type: "historical",
+                    recipient: {
+                      id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                      type: "user",
+                      name: "foo@example.com",
+                    },
+                    flattenedRecipients: [
+                      {
+                        id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                        type: "user",
+                        name: "foo@example.com",
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                id: "12339",
+                name: "Dev",
+                order: 5.0,
+                periods: [
+                  {
+                    startDate: "2019-11-06T18:00:00Z",
+                    endDate: "2019-11-07T10:00:00Z",
+                    type: "historical",
+                    recipient: {
+                      id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                      type: "user",
+                      name: "foo@example.com",
+                    },
+                    flattenedRecipients: [
+                      {
+                        id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                        type: "user",
+                        name: "foo@example.com",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      }
+    end
+    let(:datetime) { CGI.escape(Date.today.to_datetime.to_s) }
+    let(:timeline) { rotation.timeline }
+
+    it "makes the correct API call" do
+      url = "https://api.opsgenie.com/v2/schedules/123/timeline?date=#{datetime}"
+
+      stub = stub_request(:get, url)
+        .to_return(status: 200,
+                   body: body.to_json,
+                   headers: {"Content-Type" => "application/json"})
+
+      expect(timeline["id"]).to eq("12339")
+      expect(stub).to have_been_requested
+    end
+  end
 end

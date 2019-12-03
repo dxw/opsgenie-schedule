@@ -61,6 +61,52 @@ schedule.on_calls(date)
 #=> ["someone@example.com", "someone-else@example.com"]
 ```
 
+You can also fetch a timeline for a schedule:
+
+```ruby
+schedule.timeline
+```
+
+Or a specific rotation:
+
+```ruby
+schedule.rotation[0].timeline
+```
+
+You can also specify where you want a timeline to start from:
+
+```ruby
+schedule.timeline(date: Date.parse("2019-01-01"))
+#=> [
+#     {
+#       "id"=>"69e7d46d-538e-4fca-95d0-5c316a54424e",
+#       "name"=>"On Call Phone",
+#       "order"=>2.0,
+#       "periods"=> [...]
+#     },
+#     ...
+#  ]
+```
+
+As well as the interval you want to see a timeline for:
+
+```ruby
+# `interval_unit` can be one of `:days`, `:weeks` or `:months`
+schedule.timeline(interval: 1, interval_unit: :months)
+#=> [...]
+```
+
+These options also work for a rotation's timeline too:
+
+```ruby
+schedule.rotation[0].timeline(
+  date: Date.parse("2019-01-01"),
+  interval: 1,
+  interval_unit: :months
+)
+#=> {...}
+```
+
 ## Development
 
 After checking out the repo, run `bundle install` to install dependencies. Then, run `rake spec` to run the tests.

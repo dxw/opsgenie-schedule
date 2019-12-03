@@ -199,4 +199,84 @@ RSpec.describe Opsgenie::Schedule do
       end
     end
   end
+
+  describe "timeline" do
+    let(:id) { "e71d500f-896a-4b28-8b08-3bfe56e1ed76" }
+    let(:schedule) { described_class.new("id" => id, "name" => "first_line", "rotations" => []) }
+    let(:body) do
+      {
+        data: {
+          finalTimeline: {
+            rotations: [
+              id: "538465d7-67d0-4d3d-80e0-e2a07a2b5649",
+              name: "OOH",
+              order: 5.0,
+              periods: [
+                {
+                  startDate: "2019-11-06T18:00:00Z",
+                  endDate: "2019-11-07T10:00:00Z",
+                  type: "historical",
+                  recipient: {
+                    id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                    type: "user",
+                    name: "foo@example.com",
+                  },
+                  flattenedRecipients: [
+                    {
+                      id: "8e3d055d-2b50-444d-ab89-d4353e831219",
+                      type: "user",
+                      name: "foo@example.com",
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+      }
+    end
+    let(:datetime) { CGI.escape(Date.today.to_datetime.to_s) }
+
+    context "with the default arguments" do
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}" }
+      let(:timeline) { schedule.timeline }
+
+      it "returns data for the timeline" do
+        expect(timeline.count).to eq(1)
+        expect(timeline.first["id"]).to eq("538465d7-67d0-4d3d-80e0-e2a07a2b5649")
+        expect(stub).to have_been_requested
+      end
+    end
+
+    context "with date specified" do
+      let(:date) { Date.parse("2019-01-01") }
+      let(:datetime) { CGI.escape(date.to_datetime.to_s) }
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}" }
+      let(:timeline) { schedule.timeline(date: date) }
+
+      it "adds the expected date to the url" do
+        expect(timeline.count).to eq(1)
+        expect(stub).to have_been_requested
+      end
+    end
+
+    context "with interval data specified" do
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}&interval=1&intervalUnit=months" }
+      let(:timeline) { schedule.timeline(interval_unit: :months, interval: 1) }
+
+      it "adds the expected interval data to the url" do
+        expect(timeline.count).to eq(1)
+        expect(stub).to have_been_requested
+      end
+    end
+
+    context "when interval unit is invalid" do
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}&interval=1&intervalUnit=months" }
+      let(:timeline) { schedule.timeline(interval_unit: :eons, interval: 1) }
+
+      it "raises an error" do
+        expect { timeline }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end
