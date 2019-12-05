@@ -115,10 +115,7 @@ RSpec.describe Opsgenie::Rotation do
       it "makes the correct API call" do
         url = "https://api.opsgenie.com/v2/schedules/123/on-calls?date=2019-11-29T10:01:00%2B00:00"
 
-        stub = stub_request(:get, url)
-          .to_return(status: 200,
-                     body: body.to_json,
-                     headers: {"Content-Type" => "application/json"})
+        stub = stub_get_request(url, body)
 
         expect(on_calls).to eq(["foo@example.com", "bar@example.com"])
         expect(stub).to have_been_requested
@@ -199,10 +196,7 @@ RSpec.describe Opsgenie::Rotation do
     it "makes the correct API call" do
       url = "https://api.opsgenie.com/v2/schedules/123/timeline?date=#{datetime}"
 
-      stub = stub_request(:get, url)
-        .to_return(status: 200,
-                   body: body.to_json,
-                   headers: {"Content-Type" => "application/json"})
+      stub = stub_get_request(url, body)
 
       expect(timeline["id"]).to eq("12339")
       expect(stub).to have_been_requested
