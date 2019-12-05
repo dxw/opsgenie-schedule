@@ -182,11 +182,12 @@ RSpec.describe Opsgenie::Rotation do
     let(:timeline) { rotation.timeline }
 
     it "makes the correct API call" do
+      stub_user_list_request
       url = "https://api.opsgenie.com/v2/schedules/123/timeline?date=#{datetime}"
 
       stub = stub_get_request(url, body)
 
-      expect(timeline["id"]).to eq("12339")
+      expect(timeline.id).to eq("12339")
       expect(stub).to have_been_requested
     end
   end

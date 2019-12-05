@@ -45,7 +45,9 @@ module Opsgenie
       endpoint += "&interval=#{interval}" if interval
       endpoint += "&intervalUnit=#{interval_unit}" if interval_unit
       body = Opsgenie::Client.get(endpoint)
-      body.dig("data", "finalTimeline", "rotations")
+      body.dig("data", "finalTimeline", "rotations").map do |rotation|
+        TimelineRotation.new(rotation)
+      end
     end
 
     private

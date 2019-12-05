@@ -45,7 +45,7 @@ module Opsgenie
         interval_unit: interval_unit
       )
 
-      rotations.find { |r| r["name"] == name }
+      rotations.find { |r| r.name == name }
     end
 
     private
