@@ -128,17 +128,12 @@ RSpec.describe Opsgenie::Schedule do
           onCallParticipants: [
             {
               id: "19e39115-07d5-4924-8295-332a66dd1569",
-              name: "foo@example.com",
+              name: "john.doe@opsgenie.com",
               type: "user",
             },
             {
               id: "acd9af98-e3c0-4588-8276-1c545911e44f",
-              name: "bar@example.com",
-              type: "user",
-            },
-            {
-              id: "9de61103-0d61-4f86-9dbf-154bbdca9cd8",
-              name: "baz@example.com",
+              name: "jane.doe@opsgenie.com",
               type: "user",
             },
           ],
@@ -153,13 +148,15 @@ RSpec.describe Opsgenie::Schedule do
       let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/on-calls" }
 
       it "returns the expected users" do
+        stub_user_list_request
         stub = stub_get_request(url, body)
 
-        expect(on_calls).to eq([
-          "foo@example.com",
-          "bar@example.com",
-          "baz@example.com",
-        ])
+        expect(on_calls.count).to eq(2)
+        expect(on_calls[0]).to be_a(Opsgenie::User)
+        expect(on_calls[0].username).to eq("john.doe@opsgenie.com")
+        expect(on_calls[1]).to be_a(Opsgenie::User)
+        expect(on_calls[1].username).to eq("jane.doe@opsgenie.com")
+
         expect(stub).to have_been_requested
       end
     end
@@ -170,13 +167,15 @@ RSpec.describe Opsgenie::Schedule do
       let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/on-calls?date=2019-10-25T00:00:00%2B00:00" }
 
       it "returns the expected users" do
+        stub_user_list_request
         stub = stub_get_request(url, body)
 
-        expect(on_calls).to eq([
-          "foo@example.com",
-          "bar@example.com",
-          "baz@example.com",
-        ])
+        expect(on_calls.count).to eq(2)
+        expect(on_calls[0]).to be_a(Opsgenie::User)
+        expect(on_calls[0].username).to eq("john.doe@opsgenie.com")
+        expect(on_calls[1]).to be_a(Opsgenie::User)
+        expect(on_calls[1].username).to eq("jane.doe@opsgenie.com")
+
         expect(stub).to have_been_requested
       end
     end

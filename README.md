@@ -50,7 +50,10 @@ You can then fetch the people scheduled for today like so:
 
 ```ruby
 schedule.on_calls
-#=> ["someone@example.com", "someone-else@example.com"]
+#=> [
+#     <Opsgenie::User @full_name="Someone", @id=1234, @username="someone@example.com">,
+#     <Opsgenie::User @full_name="Someone Else", @id=1236, @username="somesomeone-elseone@example.com">
+#]
 ```
 
 Or a given date time like so:
@@ -58,7 +61,10 @@ Or a given date time like so:
 ```ruby
 date = DateTime.parse("2019-01-01T10:00:00")
 schedule.on_calls(date)
-#=> ["someone@example.com", "someone-else@example.com"]
+#=> [
+#     <Opsgenie::User @full_name="Someone", @id=1234, @username="someone@example.com">,
+#     <Opsgenie::User @full_name="Someone Else", @id=1236, @username="somesomeone-elseone@example.com">
+#]
 ```
 
 You can also fetch a timeline for a schedule:
