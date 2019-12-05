@@ -83,15 +83,23 @@ You can also specify where you want a timeline to start from:
 
 ```ruby
 schedule.timeline(date: Date.parse("2019-01-01"))
-#=> [
-#     {
-#       "id"=>"69e7d46d-538e-4fca-95d0-5c316a54424e",
-#       "name"=>"On Call Phone",
-#       "order"=>2.0,
-#       "periods"=> [...]
-#     },
-#     ...
-#  ]
+# => [#<Opsgenie::TimelineRotation:0x00007f9b2f974cb8
+#   @id="69e7d46d-538e-4fca-95d0-5c316a54424e",
+#   @name="On Call Phone",
+#   @periods=
+#    [#<Opsgenie::TimelinePeriod:0x00007f9b2f974c40
+#      @end_date=#<DateTime: 2019-12-05T11:55:29+00:00 ((2458823j,42929s,816000000n),+0s,2299161j)>,
+#      @start_date=#<DateTime: 2019-12-02T00:00:00+00:00 ((2458820j,0s,0n),+0s,2299161j)>,
+#      @user=
+#       #<Opsgenie::User:0x00007f9b2f329520
+#        @full_name="On Call Phone",
+#        @id="19e39115-07d5-4924-8295-332a66dd1569",
+#        @username="systems@dxw.com">>,
+#     ...]
+#    ],
+#    ...
+#   ]
+#  >
 ```
 
 As well as the interval you want to see a timeline for:
@@ -110,7 +118,7 @@ schedule.rotation[0].timeline(
   interval: 1,
   interval_unit: :months
 )
-#=> {...}
+#=> <Opsgenie::TimelineRotation:0x00007f9b2f974cb8>
 ```
 
 ## Development
