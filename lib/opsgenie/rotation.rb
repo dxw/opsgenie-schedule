@@ -35,7 +35,7 @@ module Opsgenie
       )
 
       on_calls = schedule.on_calls((time + 60).to_datetime)
-      on_calls.select { |name| participant_usernames.include?(name) }
+      on_calls.select { |user| participant_usernames.include?(user.username) }
     end
 
     def timeline(date: Date.today, interval: nil, interval_unit: nil)
@@ -45,7 +45,7 @@ module Opsgenie
         interval_unit: interval_unit
       )
 
-      rotations.find { |r| r["name"] == name }
+      rotations.find { |r| r.name == name }
     end
 
     private

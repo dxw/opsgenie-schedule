@@ -34,7 +34,7 @@ module Opsgenie
       endpoint = "schedules/#{id}/on-calls"
       endpoint += "?date=#{escape_datetime(datetime)}" unless datetime.nil?
       body = Opsgenie::Client.get(endpoint)
-      get_participants(body).map { |u| u["name"] }
+      get_participants(body).map { |u| User.find_by_username(u["name"]) }
     end
 
     def timeline(date: Date.today, interval: nil, interval_unit: nil)
@@ -45,7 +45,9 @@ module Opsgenie
       endpoint += "&interval=#{interval}" if interval
       endpoint += "&intervalUnit=#{interval_unit}" if interval_unit
       body = Opsgenie::Client.get(endpoint)
-      body.dig("data", "finalTimeline", "rotations")
+      body.dig("data", "finalTimeline", "rotations").map do |rotation|
+        TimelineRotation.new(rotation)
+      end
     end
 
     private

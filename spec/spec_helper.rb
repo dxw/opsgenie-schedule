@@ -7,9 +7,11 @@ require "dotenv"
 Dotenv.load
 
 require "webmock/rspec"
+require "support/webmock_helpers"
 
 RSpec.configure do |config|
   config.order = :random
+  config.include WebMockHelpers
 
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true

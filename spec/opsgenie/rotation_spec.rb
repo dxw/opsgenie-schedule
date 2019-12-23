@@ -11,12 +11,7 @@ RSpec.describe Opsgenie::Rotation do
       "participants" => [
         {
           "id" => "19e39115-07d5-4924-8295-332a66dd1569",
-          "username" => "foo@example.com",
-          "type" => "user",
-        },
-        {
-          "id" => "acd9af98-e3c0-4588-8276-1c545911e44f",
-          "username" => "bar@example.com",
+          "username" => "john.doe@opsgenie.com",
           "type" => "user",
         },
       ],
@@ -90,17 +85,7 @@ RSpec.describe Opsgenie::Rotation do
             onCallParticipants: [
               {
                 id: "19e39115-07d5-4924-8295-332a66dd1569",
-                name: "foo@example.com",
-                type: "user",
-              },
-              {
-                id: "acd9af98-e3c0-4588-8276-1c545911e44f",
-                name: "bar@example.com",
-                type: "user",
-              },
-              {
-                id: "9de61103-0d61-4f86-9dbf-154bbdca9cd8",
-                name: "baz@example.com",
+                name: "john.doe@opsgenie.com",
                 type: "user",
               },
             ],
@@ -113,14 +98,14 @@ RSpec.describe Opsgenie::Rotation do
       let(:date) { Date.parse("2019-11-29") }
 
       it "makes the correct API call" do
+        stub_user_list_request
         url = "https://api.opsgenie.com/v2/schedules/123/on-calls?date=2019-11-29T10:01:00%2B00:00"
 
-        stub = stub_request(:get, url)
-          .to_return(status: 200,
-                     body: body.to_json,
-                     headers: {"Content-Type" => "application/json"})
+        stub = stub_get_request(url, body)
 
-        expect(on_calls).to eq(["foo@example.com", "bar@example.com"])
+        expect(on_calls.count).to eq(1)
+        expect(on_calls.first.username).to eq("john.doe@opsgenie.com")
+
         expect(stub).to have_been_requested
       end
     end
@@ -197,14 +182,12 @@ RSpec.describe Opsgenie::Rotation do
     let(:timeline) { rotation.timeline }
 
     it "makes the correct API call" do
+      stub_user_list_request
       url = "https://api.opsgenie.com/v2/schedules/123/timeline?date=#{datetime}"
 
-      stub = stub_request(:get, url)
-        .to_return(status: 200,
-                   body: body.to_json,
-                   headers: {"Content-Type" => "application/json"})
+      stub = stub_get_request(url, body)
 
-      expect(timeline["id"]).to eq("12339")
+      expect(timeline.id).to eq("12339")
       expect(stub).to have_been_requested
     end
   end

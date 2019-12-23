@@ -1,0 +1,25 @@
+{
+  "data":{
+     "id":"b8e97704-0e9d-41b5-b27c-9d9027c83943",
+     "name":"ooh_second_line",
+     "description":"",
+     "timezone":"Europe/London",
+     "enabled":true,
+     "rotations":[
+        {
+           "id":"6fce1fd0-578a-431a-8c18-ae7db8b48bb5",
+           "name":"Rota",
+           "startDate":"2019-11-27T10:30:00Z",
+           "type":"weekly",
+           "length":1,
+           "participants":[
+              {
+                 "type":"user",
+                 "id":"055dad59-af7f-42a3-8591-9ac04863e546",
+                 "username":"foo@example.com"
+              }
+           ]
+        }
+     ]
+  }
+}

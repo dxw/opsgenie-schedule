@@ -1,14 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Opsgenie::Schedule do
-  let!(:stub) do
-    stub_request(:get, url)
-      .to_return(
-        body: body.to_json,
-        headers: {"Content-Type" => "application/json"}
-      )
-  end
-
   let(:rotations) do
     [
       {
@@ -44,6 +36,8 @@ RSpec.describe Opsgenie::Schedule do
     end
 
     it "returns a list of schedules" do
+      stub = stub_get_request(url, body)
+
       expect(all.count).to eq(1)
       expect(all.first).to be_a(Opsgenie::Schedule)
       expect(all.first.rotations.count).to eq(1)
@@ -55,21 +49,10 @@ RSpec.describe Opsgenie::Schedule do
   describe "#find" do
     let(:id) { "b8e97704-0e9d-41b5-b27c-9d9027c83943" }
     let(:schedule) { described_class.find(id) }
-    let(:body) do
-      {
-        data: {
-          id: "b8e97704-0e9d-41b5-b27c-9d9027c83943",
-          name: "ooh_second_line",
-          description: "",
-          timezone: "Europe/London",
-          enabled: true,
-          rotations: rotations,
-        },
-      }
-    end
-    let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}?identifierType=id" }
 
     it "returns a schedule" do
+      stub = stub_schedule_show_request
+
       expect(schedule).to be_a(Opsgenie::Schedule)
       expect(schedule.id).to eq(id)
       expect(schedule.name).to eq("ooh_second_line")
@@ -86,8 +69,11 @@ RSpec.describe Opsgenie::Schedule do
           requestId: "e49a7896-b78b-4775-b100-a1639241b195",
         }
       end
+      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}?identifierType=id" }
 
       it "returns nil" do
+        stub = stub_get_request(url, body)
+
         expect(schedule).to eq(nil)
         expect(stub).to have_been_requested
       end
@@ -95,23 +81,13 @@ RSpec.describe Opsgenie::Schedule do
   end
 
   describe "#find_by_name" do
-    let(:name) { "first_line" }
+    let(:name) { "ooh_second_line" }
     let(:schedule) { described_class.find_by_name(name) }
-    let(:body) do
-      {
-        data: {
-          id: "b8e97704-0e9d-41b5-b27c-9d9027c83943",
-          name: "first_line",
-          description: "",
-          timezone: "Europe/London",
-          enabled: true,
-          rotations: rotations,
-        },
-      }
-    end
     let(:url) { "https://api.opsgenie.com/v2/schedules/#{name}?identifierType=name" }
 
     it "returns a schedule" do
+      stub = stub_schedule_show_request(url)
+
       expect(schedule).to be_a(Opsgenie::Schedule)
       expect(schedule.id).to eq("b8e97704-0e9d-41b5-b27c-9d9027c83943")
       expect(schedule.name).to eq(name)
@@ -130,6 +106,8 @@ RSpec.describe Opsgenie::Schedule do
       end
 
       it "returns nil" do
+        stub = stub_get_request(url, body)
+
         expect(schedule).to eq(nil)
         expect(stub).to have_been_requested
       end
@@ -150,17 +128,12 @@ RSpec.describe Opsgenie::Schedule do
           onCallParticipants: [
             {
               id: "19e39115-07d5-4924-8295-332a66dd1569",
-              name: "foo@example.com",
+              name: "john.doe@opsgenie.com",
               type: "user",
             },
             {
               id: "acd9af98-e3c0-4588-8276-1c545911e44f",
-              name: "bar@example.com",
-              type: "user",
-            },
-            {
-              id: "9de61103-0d61-4f86-9dbf-154bbdca9cd8",
-              name: "baz@example.com",
+              name: "jane.doe@opsgenie.com",
               type: "user",
             },
           ],
@@ -175,11 +148,15 @@ RSpec.describe Opsgenie::Schedule do
       let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/on-calls" }
 
       it "returns the expected users" do
-        expect(on_calls).to eq([
-          "foo@example.com",
-          "bar@example.com",
-          "baz@example.com",
-        ])
+        stub_user_list_request
+        stub = stub_get_request(url, body)
+
+        expect(on_calls.count).to eq(2)
+        expect(on_calls[0]).to be_a(Opsgenie::User)
+        expect(on_calls[0].username).to eq("john.doe@opsgenie.com")
+        expect(on_calls[1]).to be_a(Opsgenie::User)
+        expect(on_calls[1].username).to eq("jane.doe@opsgenie.com")
+
         expect(stub).to have_been_requested
       end
     end
@@ -190,11 +167,15 @@ RSpec.describe Opsgenie::Schedule do
       let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/on-calls?date=2019-10-25T00:00:00%2B00:00" }
 
       it "returns the expected users" do
-        expect(on_calls).to eq([
-          "foo@example.com",
-          "bar@example.com",
-          "baz@example.com",
-        ])
+        stub_user_list_request
+        stub = stub_get_request(url, body)
+
+        expect(on_calls.count).to eq(2)
+        expect(on_calls[0]).to be_a(Opsgenie::User)
+        expect(on_calls[0].username).to eq("john.doe@opsgenie.com")
+        expect(on_calls[1]).to be_a(Opsgenie::User)
+        expect(on_calls[1].username).to eq("jane.doe@opsgenie.com")
+
         expect(stub).to have_been_requested
       end
     end
@@ -242,8 +223,11 @@ RSpec.describe Opsgenie::Schedule do
       let(:timeline) { schedule.timeline }
 
       it "returns data for the timeline" do
+        stub_user_list_request
+        stub = stub_get_request(url, body)
+
         expect(timeline.count).to eq(1)
-        expect(timeline.first["id"]).to eq("538465d7-67d0-4d3d-80e0-e2a07a2b5649")
+        expect(timeline.first.id).to eq("538465d7-67d0-4d3d-80e0-e2a07a2b5649")
         expect(stub).to have_been_requested
       end
     end
@@ -255,6 +239,8 @@ RSpec.describe Opsgenie::Schedule do
       let(:timeline) { schedule.timeline(date: date) }
 
       it "adds the expected date to the url" do
+        stub = stub_get_request(url, body)
+
         expect(timeline.count).to eq(1)
         expect(stub).to have_been_requested
       end
@@ -265,13 +251,15 @@ RSpec.describe Opsgenie::Schedule do
       let(:timeline) { schedule.timeline(interval_unit: :months, interval: 1) }
 
       it "adds the expected interval data to the url" do
+        stub_user_list_request
+        stub = stub_get_request(url, body)
+
         expect(timeline.count).to eq(1)
         expect(stub).to have_been_requested
       end
     end
 
     context "when interval unit is invalid" do
-      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}&interval=1&intervalUnit=months" }
       let(:timeline) { schedule.timeline(interval_unit: :eons, interval: 1) }
 
       it "raises an error" do
