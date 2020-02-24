@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    opsgenie-schedule (0.1.1)
+    opsgenie-schedule (0.1.2)
       httparty (~> 0.17)
 
 GEM
