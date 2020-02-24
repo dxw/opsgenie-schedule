@@ -114,6 +114,40 @@ RSpec.describe Opsgenie::Schedule do
     end
   end
 
+  describe "#find_by_id" do
+    let(:id) { "b8e97704-0e9d-41b5-b27c-9d9027c83943" }
+    let(:schedule) { described_class.find_by_id(id) }
+    let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}?identifierType=id" }
+
+    it "returns a schedule" do
+      stub = stub_schedule_show_request(url)
+
+      expect(schedule).to be_a(Opsgenie::Schedule)
+      expect(schedule.id).to eq(id)
+      expect(schedule.name).to eq("ooh_second_line")
+      expect(stub).to have_been_requested
+    end
+
+    context "when schedule does not exist" do
+      let(:id) { "sdsfdsfsdfsf" }
+      let(:body) do
+        {
+          code: 40301,
+          message: "Api key is not authorized to access the schedule",
+          took: 0.008,
+          requestId: "e49a7896-b78b-4775-b100-a1639241b195",
+        }
+      end
+
+      it "returns nil" do
+        stub = stub_get_request(url, body)
+
+        expect(schedule).to eq(nil)
+        expect(stub).to have_been_requested
+      end
+    end
+  end
+
   describe "on_calls" do
     let(:id) { "e71d500f-896a-4b28-8b08-3bfe56e1ed76" }
     let(:schedule) { described_class.new("id" => id, "name" => "first_line", "rotations" => []) }

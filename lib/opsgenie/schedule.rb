@@ -15,7 +15,7 @@ module Opsgenie
       end
 
       def find_by_id(id)
-        find(id, "name")
+        find(id)
       end
 
       def find(id_or_name, type = "id")
