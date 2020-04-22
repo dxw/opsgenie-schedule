@@ -251,18 +251,41 @@ RSpec.describe Opsgenie::Schedule do
       }
     end
     let(:datetime) { CGI.escape(Date.today.to_datetime.to_s) }
+    let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}" }
+
+    let!(:stub) { stub_get_request(url, body) }
+
+    before do
+      stub_user_list_request
+    end
 
     context "with the default arguments" do
-      let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}/timeline?date=#{datetime}" }
       let(:timeline) { schedule.timeline }
 
       it "returns data for the timeline" do
-        stub_user_list_request
-        stub = stub_get_request(url, body)
-
         expect(timeline.count).to eq(1)
         expect(timeline.first.id).to eq("538465d7-67d0-4d3d-80e0-e2a07a2b5649")
         expect(stub).to have_been_requested
+      end
+
+      context "when there are no periods specified" do
+        let(:body) do
+          {
+            data: {
+              finalTimeline: {
+                rotations: [
+                  id: "538465d7-67d0-4d3d-80e0-e2a07a2b5649",
+                  name: "OOH",
+                  order: 5.0,
+                ],
+              },
+            },
+          }
+        end
+
+        it "returns an empty array for the period" do
+          expect(schedule.timeline[0].periods).to eq([])
+        end
       end
     end
 
@@ -273,8 +296,6 @@ RSpec.describe Opsgenie::Schedule do
       let(:timeline) { schedule.timeline(date: date) }
 
       it "adds the expected date to the url" do
-        stub = stub_get_request(url, body)
-
         expect(timeline.count).to eq(1)
         expect(stub).to have_been_requested
       end
@@ -285,9 +306,6 @@ RSpec.describe Opsgenie::Schedule do
       let(:timeline) { schedule.timeline(interval_unit: :months, interval: 1) }
 
       it "adds the expected interval data to the url" do
-        stub_user_list_request
-        stub = stub_get_request(url, body)
-
         expect(timeline.count).to eq(1)
         expect(stub).to have_been_requested
       end
