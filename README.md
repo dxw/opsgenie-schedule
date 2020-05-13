@@ -125,7 +125,10 @@ schedule.rotation[0].timeline(
 
 After checking out the repo, run `bundle install` to install dependencies. Then, run `rake spec` to run the tests.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+To release a new version, update the version number in `opsgenie-schedule.gemspec`, commit the change and then create a git tag for that version in the
+format `x.x.x` (where x is each version number). Github Actions will then automatically push the latest version to Rubygems.
 
 ## Contributing
 
