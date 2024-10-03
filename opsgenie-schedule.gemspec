@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name = "opsgenie-schedule"
-  spec.version = "0.1.4"
+  spec.version = "0.1.6"
   spec.authors = ["Stuart Harrison"]
   spec.email = ["stuart@dxw.com"]
 
