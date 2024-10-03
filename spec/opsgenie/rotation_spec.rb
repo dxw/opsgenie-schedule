@@ -12,8 +12,8 @@ RSpec.describe Opsgenie::Rotation do
         {
           "id" => "19e39115-07d5-4924-8295-332a66dd1569",
           "username" => "john.doe@opsgenie.com",
-          "type" => "user",
-        },
+          "type" => "user"
+        }
       ],
       "timeRestriction" => {
         "type" => "weekday-and-time-of-day",
@@ -24,7 +24,7 @@ RSpec.describe Opsgenie::Rotation do
             "startHour" => 10,
             "endHour" => 18,
             "startMin" => 0,
-            "endMin" => 0,
+            "endMin" => 0
           },
           {
             "startDay" => "tuesday",
@@ -32,7 +32,7 @@ RSpec.describe Opsgenie::Rotation do
             "startHour" => 10,
             "endHour" => 18,
             "startMin" => 0,
-            "endMin" => 0,
+            "endMin" => 0
           },
           {
             "startDay" => "thursday",
@@ -40,7 +40,7 @@ RSpec.describe Opsgenie::Rotation do
             "startHour" => 10,
             "endHour" => 18,
             "startMin" => 0,
-            "endMin" => 0,
+            "endMin" => 0
           },
           {
             "startDay" => "friday",
@@ -48,7 +48,7 @@ RSpec.describe Opsgenie::Rotation do
             "startHour" => 10,
             "endHour" => 18,
             "startMin" => 0,
-            "endMin" => 0,
+            "endMin" => 0
           },
           {
             "startDay" => "wednesday",
@@ -56,10 +56,10 @@ RSpec.describe Opsgenie::Rotation do
             "startHour" => 10,
             "endHour" => 18,
             "startMin" => 0,
-            "endMin" => 0,
-          },
-        ],
-      },
+            "endMin" => 0
+          }
+        ]
+      }
     }
   end
   let(:rotation) { Opsgenie::Rotation.new(schedule, rotation_attrs) }
@@ -80,18 +80,18 @@ RSpec.describe Opsgenie::Rotation do
             _parent: {
               id: "e71d500f-896a-4b28-8b08-3bfe56e1ed76",
               name: "first_line",
-              enabled: true,
+              enabled: true
             },
             onCallParticipants: [
               {
                 id: "19e39115-07d5-4924-8295-332a66dd1569",
                 name: "john.doe@opsgenie.com",
-                type: "user",
-              },
-            ],
+                type: "user"
+              }
+            ]
           },
           took: 0.098,
-          requestId: "0c607829-68d2-4aee-8e2a-10acd972f067",
+          requestId: "0c607829-68d2-4aee-8e2a-10acd972f067"
         }
       end
 
@@ -137,17 +137,17 @@ RSpec.describe Opsgenie::Rotation do
                     recipient: {
                       id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                       type: "user",
-                      name: "foo@example.com",
+                      name: "foo@example.com"
                     },
                     flattenedRecipients: [
                       {
                         id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                         type: "user",
-                        name: "foo@example.com",
-                      },
-                    ],
-                  },
-                ],
+                        name: "foo@example.com"
+                      }
+                    ]
+                  }
+                ]
               },
               {
                 id: "12339",
@@ -161,21 +161,21 @@ RSpec.describe Opsgenie::Rotation do
                     recipient: {
                       id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                       type: "user",
-                      name: "foo@example.com",
+                      name: "foo@example.com"
                     },
                     flattenedRecipients: [
                       {
                         id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                         type: "user",
-                        name: "foo@example.com",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        },
+                        name: "foo@example.com"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
       }
     end
     let(:datetime) { CGI.escape(Date.today.to_datetime.to_s) }

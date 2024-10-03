@@ -13,10 +13,10 @@ RSpec.describe Opsgenie::Schedule do
           {
             type: "user",
             id: "055dad59-af7f-42a3-8591-9ac04863e546",
-            username: "foo@example.com",
-          },
-        ],
-      },
+            username: "foo@example.com"
+          }
+        ]
+      }
     ]
   end
 
@@ -29,9 +29,9 @@ RSpec.describe Opsgenie::Schedule do
           {
             id: "b8e97704-0e9d-41b5-b27c-9d9027c83943",
             name: "ooh_second_line",
-            rotations: rotations,
-          },
-        ],
+            rotations: rotations
+          }
+        ]
       }
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Opsgenie::Schedule do
           code: 40301,
           message: "Api key is not authorized to access the schedule",
           took: 0.008,
-          requestId: "e49a7896-b78b-4775-b100-a1639241b195",
+          requestId: "e49a7896-b78b-4775-b100-a1639241b195"
         }
       end
       let(:url) { "https://api.opsgenie.com/v2/schedules/#{id}?identifierType=id" }
@@ -101,7 +101,7 @@ RSpec.describe Opsgenie::Schedule do
           code: 40301,
           message: "Api key is not authorized to access the schedule",
           took: 0.008,
-          requestId: "e49a7896-b78b-4775-b100-a1639241b195",
+          requestId: "e49a7896-b78b-4775-b100-a1639241b195"
         }
       end
 
@@ -135,7 +135,7 @@ RSpec.describe Opsgenie::Schedule do
           code: 40301,
           message: "Api key is not authorized to access the schedule",
           took: 0.008,
-          requestId: "e49a7896-b78b-4775-b100-a1639241b195",
+          requestId: "e49a7896-b78b-4775-b100-a1639241b195"
         }
       end
 
@@ -157,23 +157,23 @@ RSpec.describe Opsgenie::Schedule do
           _parent: {
             id: "e71d500f-896a-4b28-8b08-3bfe56e1ed76",
             name: "first_line",
-            enabled: true,
+            enabled: true
           },
           onCallParticipants: [
             {
               id: "19e39115-07d5-4924-8295-332a66dd1569",
               name: "john.doe@opsgenie.com",
-              type: "user",
+              type: "user"
             },
             {
               id: "acd9af98-e3c0-4588-8276-1c545911e44f",
               name: "jane.doe@opsgenie.com",
-              type: "user",
-            },
-          ],
+              type: "user"
+            }
+          ]
         },
         took: 0.098,
-        requestId: "0c607829-68d2-4aee-8e2a-10acd972f067",
+        requestId: "0c607829-68d2-4aee-8e2a-10acd972f067"
       }
     end
 
@@ -234,20 +234,20 @@ RSpec.describe Opsgenie::Schedule do
                   recipient: {
                     id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                     type: "user",
-                    name: "foo@example.com",
+                    name: "foo@example.com"
                   },
                   flattenedRecipients: [
                     {
                       id: "8e3d055d-2b50-444d-ab89-d4353e831219",
                       type: "user",
-                      name: "foo@example.com",
-                    },
-                  ],
-                },
-              ],
-            ],
-          },
-        },
+                      name: "foo@example.com"
+                    }
+                  ]
+                }
+              ]
+            ]
+          }
+        }
       }
     end
     let(:datetime) { CGI.escape(Date.today.to_datetime.to_s) }
@@ -276,10 +276,10 @@ RSpec.describe Opsgenie::Schedule do
                 rotations: [
                   id: "538465d7-67d0-4d3d-80e0-e2a07a2b5649",
                   name: "OOH",
-                  order: 5.0,
-                ],
-              },
-            },
+                  order: 5.0
+                ]
+              }
+            }
           }
         end
 

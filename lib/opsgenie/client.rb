@@ -7,14 +7,14 @@ module Opsgenie
         url = [
           ROOT_PATH,
           version,
-          path,
+          path
         ].join("/")
         HTTParty.get(url, headers)
       end
 
       def headers
         {
-          headers: auth_header,
+          headers: auth_header
         }
       end
 
