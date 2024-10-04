@@ -49,7 +49,7 @@ module Opsgenie
         TimelineRotation.new(
           id: rotation["id"],
           name: rotation["name"],
-          periods: (rotation["periods"] || [])
+          periods: rotation["periods"] || []
         )
       end
     end
